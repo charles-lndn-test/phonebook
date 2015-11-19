@@ -10,7 +10,16 @@
     <UserControl.Resources>
         <conv:NegatableBooleanToVisibilityConverter x:Key="VisConverter" />
         <conv:NegatableBooleanToVisibilityConverter x:Key="NegVisConverter" Negate="True" />
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -26,16 +35,16 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="Name:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
-        <TextBox Name="TxName" Grid.Row="0" Grid.Column="1" Text="{Binding Contact.Name}" Margin="5" />
+        <TextBox Name="TxName" Grid.Row="0" Grid.Column="1" Text="{Binding Contact.Name, ValidatesOnNotifyDataErrors=True}" Margin="5" />
         
         <TextBlock Text="Surname:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
-        <TextBox Name="TxSurname" Grid.Row="1" Grid.Column="1" Text="{Binding Contact.Surname}" Margin="5" />
+        <TextBox Name="TxSurname" Grid.Row="1" Grid.Column="1" Text="{Binding Contact.Surname, ValidatesOnNotifyDataErrors=True}" Margin="5" />
         
         <TextBlock Text="City:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
-        <TextBox Name="TxCity" Grid.Row="2" Grid.Column="1" Text="{Binding Contact.City}" Margin="5" />
+        <TextBox Name="TxCity" Grid.Row="2" Grid.Column="1" Text="{Binding Contact.City, ValidatesOnNotifyDataErrors=True}" Margin="5" />
         
         <TextBlock Text="Phone Number:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
-        <TextBox Name="TxPhoneNumber" Grid.Row="3" Grid.Column="1" Text="{Binding Contact.PhoneNumber}" Margin="5" />
+        <TextBox Name="TxPhoneNumber" Grid.Row="3" Grid.Column="1" Text="{Binding Contact.PhoneNumber, ValidatesOnNotifyDataErrors=True}" Margin="5" />
 
         <StackPanel Orientation="Horizontal"
                     Grid.Row="4"

@@ -24,6 +24,11 @@ namespace Phonebook
             _TargetCanExecuteMethod = canExecuteMethod;
         }
 
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged(this, EventArgs.Empty);
+        }
+
         #region ICommand Members
         public event EventHandler CanExecuteChanged = delegate { };
 
@@ -39,6 +44,8 @@ namespace Phonebook
             if (_TargetExecuteMethod != null)
                 _TargetExecuteMethod();
         }
+
+        
         #endregion
     }
 
@@ -56,6 +63,11 @@ namespace Phonebook
         {
             _TargetExecuteMethod = executeMethod;
             _TargetCanExecuteMethod = canExecuteMethod;
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged(this, EventArgs.Empty);
         }
 
         #region ICommand Members

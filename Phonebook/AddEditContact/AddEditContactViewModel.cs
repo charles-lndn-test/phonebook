@@ -10,7 +10,7 @@ namespace Phonebook.AddEditContact
 {
     class AddEditContactViewModel: BindableBase
     {
-        private IContactsRepository _repo = new PostgreSqlContactsRepository();
+        
 
         private bool _EditMode;
         public bool EditMode
@@ -39,15 +39,18 @@ namespace Phonebook.AddEditContact
 
         public event Action Done = delegate { };
 
-        public async void SetContact(int id = 0)
+        public void SetContact(ContactDetails contactDetails)
         {
-            if (EditMode == true && id != 0)
-                _editingContact = await _repo.GetContactDetailsAsync(id);
-            else
-                _editingContact = new ContactDetails();
-
+            if (Contact != null) Contact.ErrorsChanged -= RaiseCanExecuteChanged;
+            _editingContact = contactDetails;
             Contact = new SimpleEditableContact();
+            Contact.ErrorsChanged += RaiseCanExecuteChanged;
             CopyContactDetails(_editingContact, Contact);
+        }
+
+        private void RaiseCanExecuteChanged(object sender, EventArgs e)
+        {
+            SaveCommand.RaiseCanExecuteChanged();
         }
 
         private void CopyContactDetails(ContactDetails source, SimpleEditableContact target)
@@ -74,7 +77,7 @@ namespace Phonebook.AddEditContact
 
         private bool CanSave()
         {
-            return true;
+            return !Contact.HasErrors;
         }
         
     }

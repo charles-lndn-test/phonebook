@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Phonebook.ContactList;
 using Phonebook.AddEditContact;
+using Phonebook.Models;
+using Phonebook.Services;
 
 namespace Phonebook
 {
     public class MainWindowViewModel: BindableBase
     {
+        private IContactsRepository _repo = new PostgreSqlContactsRepository();
+
         private ContactListViewModel _contactListViewModel = new ContactListViewModel();
         private AddEditContactViewModel _addEditContactViewModel = new AddEditContactViewModel();
 
@@ -43,18 +47,17 @@ namespace Phonebook
             }
         }
 
-        private void NavToEdit(int contactId)
+        private async void NavToEdit(int contactId)
         {
             _addEditContactViewModel.EditMode = true;
-            _addEditContactViewModel.SetContact(contactId);
+            _addEditContactViewModel.SetContact(await _repo.GetContactDetailsAsync(contactId));
             CurrentViewModel = _addEditContactViewModel;
         }
 
         private void NavToAdd()
         {
             _addEditContactViewModel.EditMode = false;
-            //_addEditContactViewModel.LoadContact();
-            _addEditContactViewModel.SetContact();
+            _addEditContactViewModel.SetContact(new ContactDetails());
             CurrentViewModel = _addEditContactViewModel;
         }
 

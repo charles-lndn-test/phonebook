@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Phonebook.AddEditContact
 {
-    class SimpleEditableContact: BindableBase
+    class SimpleEditableContact: ValidatableBindableBase
     {
         private int _id;
         public int Id
@@ -16,6 +17,7 @@ namespace Phonebook.AddEditContact
         }
 
         private string _name;
+        [Required]
         public string Name
         {
             get { return _name; }
@@ -23,6 +25,7 @@ namespace Phonebook.AddEditContact
         }
 
         private string _surname;
+        [Required]
         public string Surname
         {
             get { return _surname; }
@@ -30,6 +33,7 @@ namespace Phonebook.AddEditContact
         }
 
         private string _city;
+        [Required]
         public string City
         {
             get { return _city; }
@@ -37,6 +41,7 @@ namespace Phonebook.AddEditContact
         }
 
         private string _phoneNUmber;
+        [Required]
         public string PhoneNumber
         {
             get { return _phoneNUmber; }
